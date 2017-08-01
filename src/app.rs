@@ -77,6 +77,7 @@ pub fn app() -> App<'static, 'static> {
         // Second, set up common flags.
         .arg(flag("text").short("a"))
         .arg(flag("count").short("c"))
+        .arg(flag("count-matches"))
         .arg(flag("color")
              .value_name("WHEN")
              .takes_value(true)
