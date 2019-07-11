@@ -716,3 +716,22 @@ rgtest!(r1259_drop_last_byte_nonl, |dir: Dir, mut cmd: TestCommand| {
     cmd = dir.command();
     eqnice!("fz\n", cmd.arg("-f").arg("patterns-nl").arg("test").stdout());
 });
+
+
+// See: https://github.com/BurntSushi/ripgrep/issues/1319
+rgtest!(r1319_fix_match_bug_inner_literal_extraction, |dir: Dir, mut cmd: TestCommand| {
+    dir.create("subject","TTGAGTCCAGGAGTTC");
+    dir.create("pattern1", "TTGAGTCCAGGAG[ATCG]{2}C");
+    dir.create("pattern2", "TGAGTCCAGGAG[ATCG]{2}C");
+
+    eqnice!(
+        "1\n",
+        cmd.arg("-c").arg("-f").arg("pattern1").arg("subject").stdout()
+    );
+    cmd = dir.command();
+    eqnice!(
+        "1\n",
+        cmd.arg("-c").arg("-f").arg("pattern2").arg("subject").stdout()
+    );
+
+});
