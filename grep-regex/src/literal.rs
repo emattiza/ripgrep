@@ -328,4 +328,9 @@ mod tests {
         // assert_eq!(one_regex(r"a.*c"), pat("a"));
         assert_eq!(one_regex(r"a(.*c)"), pat("a"));
     }
+
+    #[test]
+    fn regression_1319() {
+        assert_eq!(true, false)
+    }
 }
